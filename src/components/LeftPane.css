@@ -1,0 +1,32 @@
+.leftPaneWrap {
+  width: 15%;
+  background: #3b3b3b;
+  height: 95.5vh;
+}
+.chatFriend {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: center;
+  color: #aeadad;
+  cursor: pointer;
+}
+.users {
+}
+.users h3 {
+  color: #aeadad;
+  text-align: center;
+  font-weight: 300;
+  padding: 20px;
+  border-bottom: 1px solid rgba(93, 93, 93, 0.8);
+}
+.chatFriend:hover {
+  background: #525252;
+}
+.chatFriend img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.chatFriend p:hover {
+  text-decoration: underline;
+}

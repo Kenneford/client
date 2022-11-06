@@ -1,24 +1,84 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import SignUp from "./userSigning/SignUp";
+import SignIn from "./userSigning/SignIn";
+import MainPage from "./pages/MainPage";
+import {
+  signUpUser,
+  validateUser,
+  getVerifiedUsers,
+} from "./apiController/api_operations";
 
 function App() {
+  const [data, setData] = useState({
+    users: [],
+    token: null,
+    userName: null,
+  });
+  const [signup, setSignup] = useState();
+
+  const register = async (
+    firstName,
+    lastName,
+    userName,
+    email,
+    password,
+    confirmPassword
+  ) => {
+    const token = await signUpUser({
+      firstName,
+      lastName,
+      userName,
+      email,
+      password,
+      confirmPassword,
+    });
+    setData((prev) => {
+      const newState = { ...prev, token };
+      console.log("newState", newState);
+      return newState;
+    });
+  };
+
+  const getUsers = async (token) => {
+    if (!token) {
+      console.log("token not ready yet");
+      return [];
+    }
+    console.log("token ready, will get users");
+    const users = await getVerifiedUsers(token);
+    if (!users) {
+      return;
+    }
+    setData((prev) => {
+      const newState = { ...prev, users };
+      console.log("newState", newState);
+      return newState;
+    });
+  };
+
+  // useEffect(() => {
+  //   console.log("Reading Blogs");
+  // }, [data.token]);
+
+  const signin = async (userName, password) => {
+    const token = await validateUser(userName, password);
+    setData((prev) => ({ ...prev, token: token }));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={<SignIn signin={signin} token={data.token} />}
+      />
+      <Route
+        path="/signup"
+        element={<SignUp register={register} token={data.token} />}
+      />
+      <Route path="/chat" element={<MainPage />} />
+    </Routes>
   );
 }
 

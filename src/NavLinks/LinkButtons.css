@@ -1,0 +1,28 @@
+.famLink a {
+  text-decoration: none;
+  color: #39cb39;
+  font-weight: 700;
+  font-size: 1.52em;
+}
+span {
+  color: #fff;
+  font-size: 2em;
+  margin-top: -80px;
+}
+
+/*SignIn*/
+.signInLinkBtn,
+.signUpLinkBtn {
+  padding-top: 20px;
+  color: #39cb39;
+}
+
+.signInLinkBtn a,
+.signUpLinkBtn a {
+  text-decoration: none;
+  color: #fff;
+}
+.signInLinkBtn a:hover,
+.signUpLinkBtn a:hover {
+  text-decoration: underline;
+}
