@@ -16,7 +16,6 @@ function App() {
     token: null,
     userName: null,
   });
-  const [signup, setSignup] = useState();
 
   const register = async (
     firstName,
@@ -34,11 +33,7 @@ function App() {
       password,
       confirmPassword,
     });
-    setData((prev) => {
-      const newState = { ...prev, token };
-      console.log("newState", newState);
-      return newState;
-    });
+    setData((prev) => ({ ...prev, token: token }));
   };
 
   const getUsers = async (token) => {

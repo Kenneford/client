@@ -29,15 +29,33 @@ export default function SignUp({ register }) {
       password,
       confirmPassword,
     });
-    if (handleValidation()) {
-      register({
-        firstName,
-        lastName,
-        userName,
-        email,
-        password,
-        confirmPassword,
-      });
+    const newUser = register(
+      firstName,
+      lastName,
+      userName,
+      email,
+      password,
+      confirmPassword
+    );
+    if (password !== confirmPassword) {
+      toast.error(
+        "Password and confirm password must be the same!",
+        toastOptions
+      );
+      return false;
+    } else if (userName.length < 3) {
+      toast.error("Username should be more than 3 characters!", toastOptions);
+      return false;
+    } else if (password.length < 8) {
+      toast.error(
+        "Password should be equal to or greater than 8 characters!",
+        toastOptions
+      );
+      return false;
+    } else if (email === "") {
+      toast.error("Please check and enter email address!", toastOptions);
+      return false;
+    } else {
       navigate("/chat");
       setFirstName("");
       setLastName("");
@@ -46,6 +64,7 @@ export default function SignUp({ register }) {
       setPassword("");
       setConfirmPassword("");
     }
+    return newUser;
     // return;
   };
 

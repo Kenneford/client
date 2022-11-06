@@ -1,5 +1,5 @@
 const API_ENDPOINT =
-  process.env.API_ENDPOINT || "https://family-chat-app-project.herokuapp.com/";
+  process.env.API_ENDPOINT || "https://family-chat-app-project.herokuapp.com";
 
 export const signUpUser = async (
   firstName,
@@ -37,7 +37,7 @@ export const validateUser = async (userName, password) => {
     body: JSON.stringify({ userName, password }),
   });
   const result = await response.json();
-  //   console.log("result", result);
+  console.log("result", result);
   console.log("result.token", result.token);
   return result?.token;
 };
