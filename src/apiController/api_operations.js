@@ -11,7 +11,7 @@ export const signUpUser = async (
   password,
   confirmPassword
 ) => {
-  const response = await fetch(LOCAL_API_ENDPOINT + "/api/signup", {
+  const response = await fetch(API_ENDPOINT + "/api/signup", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -32,7 +32,7 @@ export const signUpUser = async (
 
 //Logging In Users
 export const validateUser = async (userName, password) => {
-  const response = await fetch(LOCAL_API_ENDPOINT + "/api/login", {
+  const response = await fetch(API_ENDPOINT + "/api/login", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
