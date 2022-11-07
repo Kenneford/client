@@ -13,8 +13,11 @@ export const signUpUser = async (
 ) => {
   const response = await fetch(API_ENDPOINT + "/api/signup", {
     method: "POST",
+    crossDomain: true,
     headers: {
       "Content-type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({
       firstName,
@@ -34,8 +37,11 @@ export const signUpUser = async (
 export const validateUser = async (userName, password) => {
   const response = await fetch(API_ENDPOINT + "/api/login", {
     method: "POST",
+    crossDomain: true,
     headers: {
       "Content-type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({ userName, password }),
   });
