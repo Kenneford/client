@@ -8,9 +8,8 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Container } from "@mui/material";
 
-export default function SignUp({ register }) {
+export default function SignUp({ signup, user, getUsers }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
@@ -19,8 +18,23 @@ export default function SignUp({ register }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 5000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
+
+  const userCheck = () => {
+    const oldUser = getUsers().map((user) => {
+      return user.userName;
+    });
+    return oldUser;
+  };
+
   const handleSignUp = (e) => {
-    e.preventDefault(e);
+    e.preventDefault();
     console.log({
       firstName,
       lastName,
@@ -29,14 +43,7 @@ export default function SignUp({ register }) {
       password,
       confirmPassword,
     });
-    const newUser = register(
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-      confirmPassword
-    );
+    signup(firstName, lastName, userName, email, password, confirmPassword);
     if (password !== confirmPassword) {
       toast.error(
         "Password and confirm password must be the same!",
@@ -46,7 +53,12 @@ export default function SignUp({ register }) {
     } else if (userName.length < 3) {
       toast.error("Username should be more than 3 characters!", toastOptions);
       return false;
-    } else if (password.length < 8) {
+    }
+    // else if (userName) {
+    //   toast.error("Username already in use by another user!", toastOptions);
+    //   return false;
+    // }
+    else if (password.length < 8) {
       toast.error(
         "Password should be equal to or greater than 8 characters!",
         toastOptions
@@ -57,46 +69,30 @@ export default function SignUp({ register }) {
       return false;
     } else {
       navigate("/chat");
-      setFirstName("");
-      setLastName("");
-      setUserName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-    }
-    return newUser;
-    // return;
-  };
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 5000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "light",
-  };
-
-  const handleValidation = () => {
-    if (password !== confirmPassword) {
-      toast.error(
-        "Password and confirm password must be the same!",
-        toastOptions
-      );
-      return false;
-    } else if (userName.length < 3) {
-      toast.error("Username should be more than 3 characters!", toastOptions);
-      return false;
-    } else if (password.length < 8) {
-      toast.error(
-        "Password should be equal to or greater than 8 characters!",
-        toastOptions
-      );
-      return false;
-    } else if (email === "") {
-      toast.error("Please check and enter email address!", toastOptions);
-      return false;
     }
   };
+
+  // const handleValidation = () => {
+  //   if (password !== confirmPassword) {
+  //     toast.error(
+  //       "Password and confirm password must be the same!",
+  //       toastOptions
+  //     );
+  //     return false;
+  //   } else if (userName.length < 3) {
+  //     toast.error("Username should be more than 3 characters!", toastOptions);
+  //     return false;
+  //   } else if (password.length < 8) {
+  //     toast.error(
+  //       "Password should be equal to or greater than 8 characters!",
+  //       toastOptions
+  //     );
+  //     return false;
+  //   } else if (email === "") {
+  //     toast.error("Please check and enter email address!", toastOptions);
+  //     return false;
+  //   }
+  // };
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key

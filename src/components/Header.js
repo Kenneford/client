@@ -59,7 +59,7 @@ export default function Header() {
                 cursor: "pointer",
               }}
             />
-            <Link to="/">
+            <Link to="/login">
               <button className="logout">Log Out</button>
             </Link>
           </div>

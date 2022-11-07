@@ -6,8 +6,12 @@ import RightPane from "../components/RightPane";
 import { Routes, Route } from "react-router-dom";
 import ChatPage from "./ChatPage";
 import Settings from "./Settings";
+import { Link, Navigate } from "react-router-dom";
 
-export default function MainPage() {
+export default function MainPage({ token }) {
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className="mainBody">
       <Header />

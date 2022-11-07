@@ -17,7 +17,8 @@ function App() {
     userName: null,
   });
 
-  const register = async (
+  //User Sign Up Function
+  const signup = async (
     firstName,
     lastName,
     userName,
@@ -25,14 +26,19 @@ function App() {
     password,
     confirmPassword
   ) => {
-    const token = await signUpUser({
+    const token = await signUpUser(
       firstName,
       lastName,
       userName,
       email,
       password,
-      confirmPassword,
-    });
+      confirmPassword
+    );
+    setData((prev) => ({ ...prev, token: token }));
+  };
+
+  const signin = async (userName, password) => {
+    const token = await validateUser(userName, password);
     setData((prev) => ({ ...prev, token: token }));
   };
 
@@ -53,26 +59,21 @@ function App() {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("Reading Blogs");
-  // }, [data.token]);
-
-  const signin = async (userName, password) => {
-    const token = await validateUser(userName, password);
-    setData((prev) => ({ ...prev, token: token }));
-  };
+  useEffect(() => {}, [data.token]);
 
   return (
     <Routes>
       <Route
-        path="/login"
-        element={<SignIn signin={signin} token={data.token} />}
+        path="/signup"
+        element={
+          <SignUp signup={signup} token={data.token} getUsers={getUsers} />
+        }
       />
       <Route
-        path="/signup"
-        element={<SignUp register={register} token={data.token} />}
+        path="/login"
+        element={<SignIn signin={signin} getUsers={getUsers} />}
       />
-      <Route path="/chat" element={<MainPage />} />
+      <Route path="/chat" element={<MainPage token={data.token} />} />
     </Routes>
   );
 }
