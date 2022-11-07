@@ -6,9 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { validateUser } from "../apiController/api_operations";
 
-export default function SignIn({ signin }) {
+export default function SignIn({ signin, token, getUsers }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
@@ -21,16 +20,27 @@ export default function SignIn({ signin }) {
     theme: "light",
   };
 
+  const userCheck = () => {
+    const oldUser = getUsers().map((user) => {
+      return user.password;
+    });
+    return oldUser;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(userName, password);
-    const user = await validateUser();
     signin(userName, password);
+    const userSignIn = signin(userName, password);
     if (!password || !userName) {
-      toast.error("Username and password required!", toastOptions);
-      // } else if (password !== user.password || userName !== user.userName) {
-      //   toast.error("Wrong username or password provided!", toastOptions);
-    } else {
+      toast.error("User login failed! Try", toastOptions);
+      return false;
+    }
+    // else if (password !== userCheck) {
+    //   toast.error("Username and password required!", toastOptions);
+    //   return false;
+    // }
+    else {
       navigate("/chat");
     }
   };
