@@ -33,7 +33,7 @@ export const signUpUser = async (
 //Logging In Users
 export const validateUser = async (userName, password) => {
   const response = await fetch(API_ENDPOINT + "/api/login", {
-    mode: "nor-cors",
+    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-type": "application/json",
