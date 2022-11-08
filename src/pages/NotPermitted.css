@@ -1,0 +1,29 @@
+.permitWrap {
+  height: 60.1vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.permitWrap h1 {
+  font-size: 3em;
+}
+
+.permitWrap p {
+  font-size: 1.5em;
+  margin: 5px 0 30px;
+}
+
+.permitWrap button {
+  padding: 7px;
+  font-size: 1.2em;
+  font-weight: 500;
+  font-family: "roboto";
+  background: #018e01;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+}
+.permitWrap button:hover {
+  background: #04ab04;
+}

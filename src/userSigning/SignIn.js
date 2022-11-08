@@ -35,12 +35,7 @@ export default function SignIn({ signin, token, getUsers }) {
     if (!password || !userName) {
       toast.error("User login failed! Try", toastOptions);
       return false;
-    }
-    // else if (password !== userCheck) {
-    //   toast.error("Username and password required!", toastOptions);
-    //   return false;
-    // }
-    else {
+    } else {
       navigate("/chat");
     }
   };

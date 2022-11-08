@@ -2,5 +2,24 @@
   width: 15%;
   background: #3b3b3b;
   height: 95.5vh;
-  float: right;
+  right: 0;
+}
+.individaulGroup div {
+  align-items: center;
+  padding: 10px;
+  color: #aeadad;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.individaulGroup div:hover {
+  background: #525252;
+}
+.groups h3 {
+  color: #aeadad;
+  text-align: center;
+  font-weight: 300;
+  padding: 20px;
+  border-bottom: 1px solid rgba(93, 93, 93, 0.8);
 }
