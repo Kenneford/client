@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "../components/Search";
 import TextsmsIcon from "@mui/icons-material/Textsms";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -8,6 +8,10 @@ import HelpIcon from "@mui/icons-material/Help";
 import "./Header.css";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const goToSettings = () => {
+    navigate("/settings");
+  };
   return (
     <div>
       <div className="header">
@@ -23,21 +27,22 @@ export default function Header() {
               <img src="/watsup-pic.jpg" alt="" width="30" height="30" />
               <p>@Kenneford</p>
             </Link>
-            <Link to="/settings">
-              <ManageAccountsIcon
-                titleAccess="Account Settings"
-                sx={{
-                  color: "#24f524",
-                  transition: ".3s",
-                  borderRadius: "5px",
-                  padding: "5px",
-                  fontSize: "2em",
-                  "&:hover": {
-                    background: "#3b3b3b",
-                  },
-                }}
-              />
-            </Link>
+            {/* <Link to="/settings"> */}
+            <ManageAccountsIcon
+              onClick={goToSettings}
+              titleAccess="Account Settings"
+              sx={{
+                color: "#24f524",
+                transition: ".3s",
+                borderRadius: "5px",
+                padding: "5px",
+                fontSize: "2em",
+                "&:hover": {
+                  background: "#3b3b3b",
+                },
+              }}
+            />
+            {/* </Link> */}
           </div>
           <div className="headerIcons">
             <Search />

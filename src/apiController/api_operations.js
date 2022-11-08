@@ -11,7 +11,7 @@ export const signUpUser = async (
   password,
   confirmPassword
 ) => {
-  const response = await fetch(API_ENDPOINT + "/api/signup", {
+  const response = await fetch(LOCAL_API_ENDPOINT + "/api/signup", {
     method: "POST",
     crossDomain: true,
     headers: {
@@ -35,7 +35,7 @@ export const signUpUser = async (
 
 //Logging In Users
 export const validateUser = async (userName, password) => {
-  const response = await fetch(API_ENDPOINT + "/api/login", {
+  const response = await fetch(LOCAL_API_ENDPOINT + "/api/login", {
     method: "POST",
     crossDomain: true,
     headers: {
@@ -52,7 +52,7 @@ export const validateUser = async (userName, password) => {
 };
 
 export const getVerifiedUsers = async (token) => {
-  const response = await fetch(API_ENDPOINT + "/api/users", {
+  const response = await fetch(LOCAL_API_ENDPOINT + "/api/users", {
     method: "GET",
     headers: {
       "Content-type": "application/json",

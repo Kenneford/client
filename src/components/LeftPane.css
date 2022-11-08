@@ -1,17 +1,15 @@
-.leftPaneWrap {
+.users {
   width: 15%;
   background: #3b3b3b;
   height: 95.5vh;
+  left: 0;
 }
 .chatFriend {
   display: flex;
   align-items: center;
   padding: 10px;
-  justify-content: center;
   color: #aeadad;
   cursor: pointer;
-}
-.users {
 }
 .users h3 {
   color: #aeadad;
@@ -22,6 +20,9 @@
 }
 .chatFriend:hover {
   background: #525252;
+}
+.userImgWrap {
+  margin-left: 25%;
 }
 .chatFriend img {
   border-radius: 50%;

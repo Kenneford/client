@@ -8,20 +8,17 @@ import ChatPage from "./ChatPage";
 import Settings from "./Settings";
 import { Link, Navigate } from "react-router-dom";
 
-export default function MainPage({ token }) {
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
+export default function MainPage({ token, getUsers }) {
   return (
     <div className="mainBody">
       <Header />
       <div className="componentsFlex">
-        <LeftPane />
-        <ChatPage />
-        {/* <Routes>
-          <Route path="/chat" element={<ChatPage />} />
+        <LeftPane getUsers={getUsers} />
+        {/* <ChatPage /> */}
+        <Routes>
+          <Route path="/" element={<ChatPage />} />
           <Route path="/settings" element={<Settings />} />
-        </Routes> */}
+        </Routes>
         <RightPane />
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import SignUp from "./userSigning/SignUp";
 import SignIn from "./userSigning/SignIn";
 import MainPage from "./pages/MainPage";
+import NotPermitted from "./pages/NotPermitted";
 import {
   signUpUser,
   validateUser,
@@ -70,10 +71,14 @@ function App() {
         }
       />
       <Route
-        path="/login"
+        path="/"
         element={<SignIn signin={signin} getUsers={getUsers} />}
       />
-      <Route path="/chat" element={<MainPage token={data.token} />} />
+      <Route
+        path="/chat"
+        element={<MainPage token={data.token} getUsers={getUsers} />}
+      />
+      <Route path="/unauthorized" element={<NotPermitted />} />
     </Routes>
   );
 }
