@@ -16,6 +16,7 @@ export default function SignUp({ signup, user, getUsers }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const toastOptions = {
@@ -44,7 +45,11 @@ export default function SignUp({ signup, user, getUsers }) {
       confirmPassword,
     });
     signup(firstName, lastName, userName, email, password, confirmPassword);
-    if (password !== confirmPassword) {
+    if (!firstName || !lastName) {
+      const error = "First name or last name should not be empty!";
+      console.log({ Error: error });
+      return error;
+    } else if (password !== confirmPassword) {
       toast.error(
         "Password and confirm password must be the same!",
         toastOptions

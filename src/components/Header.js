@@ -6,6 +6,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import "./Header.css";
+import UsersLinkButton from "../NavLinks/UsersLinkButton";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function Header() {
               }}
             />
             {/* </Link> */}
+            <UsersLinkButton />
           </div>
           <div className="headerIcons">
             <Search />
