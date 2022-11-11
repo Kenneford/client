@@ -47,7 +47,7 @@ export const validateUser = async (userName, password) => {
   });
   const result = await response.json();
   console.log("token", result.token);
-  console.log("refreshToken", result.refreshToken);
+  console.log("refreshToken", result.refreshTokens);
   return result?.token;
 };
 

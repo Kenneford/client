@@ -10,6 +10,8 @@ import {
   validateUser,
   getVerifiedUsers,
 } from "./apiController/api_operations";
+import UsersLinkButton from "./NavLinks/UsersLinkButton";
+import UsersPage from "./pages/UsersPage";
 
 function App() {
   const [data, setData] = useState({
@@ -60,7 +62,7 @@ function App() {
     });
   };
 
-  useEffect(() => {}, [data.token]);
+  // useEffect(() => {}, [data.token]);
 
   return (
     <Routes>
@@ -78,6 +80,7 @@ function App() {
         path="/chat"
         element={<MainPage token={data.token} getUsers={getUsers} />}
       />
+      <Route path="/all-users" element={<UsersPage />} />
       <Route path="/unauthorized" element={<NotPermitted />} />
     </Routes>
   );

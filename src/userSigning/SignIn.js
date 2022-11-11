@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SignIn({ signin, token, getUsers }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const toastOptions = {
@@ -27,13 +28,17 @@ export default function SignIn({ signin, token, getUsers }) {
     return oldUser;
   };
 
+  //Still need to work on user login
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(userName, password);
     signin(userName, password);
-    const userSignIn = signin(userName, password);
     if (!password || !userName) {
-      toast.error("User login failed! Try", toastOptions);
+      toast.error(
+        "Authentication failed! Invalid username or password!😒",
+        toastOptions
+      );
+      // setError("Password and username can't be empty!");
       return false;
     } else {
       navigate("/chat");
@@ -98,6 +103,7 @@ export default function SignIn({ signin, token, getUsers }) {
           SIGN IN
         </button>
       </form>
+      {/* <span>{error}</span> */}
       <ToastContainer />
     </div>
   );
