@@ -14,6 +14,7 @@ import UsersLinkButton from "./NavLinks/UsersLinkButton";
 import UsersPage from "./pages/UsersPage";
 import ChatPage from "./pages/ChatPage";
 import SentMessages, { ReceivedMessages } from "./pages/SentMessages";
+import ChatContainer from "./pages/ChatContainer";
 
 function App() {
   const [data, setData] = useState({
@@ -75,14 +76,14 @@ function App() {
         }
       />
       <Route
-        path="/"
+        path="/login"
         element={
           <SignIn signin={signin} getUsers={getUsers} token={data.token} />
         }
       />
       <Route
-        path="/chat"
-        element={<ChatPage token={data.token} getUsers={getUsers} />}
+        path="/"
+        element={<ChatContainer token={data.token} getUsers={getUsers} />}
       />
       <Route path="/all-users" element={<UsersPage />} />
       <Route path="/unauthorized" element={<NotPermitted />} />

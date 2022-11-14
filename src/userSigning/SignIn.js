@@ -41,7 +41,7 @@ export default function SignIn({ signin, token, getUsers }) {
       // setError("Password and username can't be empty!");
       return;
     } else {
-      navigate("/chat");
+      navigate("/");
     }
   };
 

@@ -5,7 +5,7 @@ import "./LinkButtons.css";
 export default function SignInButton() {
   return (
     <div className="signInLinkBtn">
-      Already have an account? <Link to="/">Sign-In</Link>
+      Already have an account? <Link to="/login">Sign-In</Link>
     </div>
   );
 }
