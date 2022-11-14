@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import RightPane from "../components/RightPane";
 import ChatInput from "./ChatInput";
-import Messages from "./Messages";
-export default function ChatPage({ token }) {
+import Messages from "./SentMessages";
+
+export default function ChatPage() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -20,18 +21,18 @@ export default function ChatPage({ token }) {
   useEffect(() => {
     readUser();
   }, []);
-
   if (!users) {
     return <div>Loading...</div>;
     // navigate("/login");
   }
+
   return (
     <div className="chatBody">
       <Header users={users} />
       <div className="sideBars">
         <LeftPane users={users} />
         <div className="chatCont">
-          <ChatInput />
+          <ChatInput messageSent={(message) => console.log(message.message)} />
         </div>
         <RightPane users={users} />
       </div>

@@ -10,30 +10,40 @@ import Settings from "./Settings";
 // import { IoMdSend } from "react-icons/io";
 // import { BsEmojiSmileFill } from "react-icons/bs";
 import { Link, Navigate } from "react-router-dom";
-import Messages from "./Messages";
+import SentMessages from "./SentMessages";
+import ReceivedMessages from "./ReceivedMessages";
+import moment from "moment";
 
-// const PORT = 4000;
-// const URL = "ws://localhost:" + PORT;
+const PORT = "/chat";
 
-export default function ChatInput({ token, getUsers }) {
+export default function ChatInput({ messageSent }) {
   const [sentMessages, setSentMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
-  const [reveivedMessages, setReceivedMessages] = useState("");
+  const [reveivedMessages, setReceivedMessages] =
+    useState("I'm in here too!🤣");
+  // const [user, setUser] = useState("");
+  const date = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
+  // const date = moment().format("Do YY");
+  const time = moment().format("h:mm:ss a");
 
-  // let wsClient;
-  // wsClient = new WebSocket(URL);
-  // wsClient.onopen = () => {
-  //   console.log("Connection to the WebSocket server established!");
-  //   const data = {
-  //     type: "NEW_USER",
-  //     // payload: { username },
-  //   };
-  //   wsClient.send(JSON.stringify(data));
-  // };
-
+  const addMessage = (sentMessages) => {
+    setSentMessages((prev) => [...prev, sentMessages]);
+  };
   const sendMessage = (e) => {
     e.preventDefault();
-    setSentMessages(messageInput);
+    if (messageInput === "") {
+      alert("Please add a message!");
+      return;
+    } else {
+      setSentMessages((prev) => [...prev, messageInput]);
+      setMessageInput("");
+    }
+  };
+  const sendMessage1 = (e) => {
+    e.preventDefault();
+    messageSent({
+      sentMessages,
+    });
     setMessageInput("");
   };
 
@@ -46,7 +56,19 @@ export default function ChatInput({ token, getUsers }) {
 
   return (
     <div className="mainBody">
-      <Messages sentMessages={sentMessages} />
+      <div className="msgCont">
+        <SentMessages
+          sentMessages={sentMessages}
+          // reveivedMessages={reveivedMessages}
+          date={date}
+          time={time}
+        />
+        <ReceivedMessages
+          reveivedMessages={reveivedMessages}
+          date={date}
+          time={time}
+        />
+      </div>
       <form
         className="chatInput"
         onSubmit={sendMessage}
