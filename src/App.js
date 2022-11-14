@@ -13,6 +13,7 @@ import {
 import UsersLinkButton from "./NavLinks/UsersLinkButton";
 import UsersPage from "./pages/UsersPage";
 import ChatPage from "./pages/ChatPage";
+import SentMessages, { ReceivedMessages } from "./pages/SentMessages";
 
 function App() {
   const [data, setData] = useState({
@@ -75,7 +76,9 @@ function App() {
       />
       <Route
         path="/"
-        element={<SignIn signin={signin} getUsers={getUsers} />}
+        element={
+          <SignIn signin={signin} getUsers={getUsers} token={data.token} />
+        }
       />
       <Route
         path="/chat"

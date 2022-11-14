@@ -39,7 +39,7 @@ export default function SignIn({ signin, token, getUsers }) {
         toastOptions
       );
       // setError("Password and username can't be empty!");
-      return false;
+      return;
     } else {
       navigate("/chat");
     }
