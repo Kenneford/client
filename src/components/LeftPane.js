@@ -1,25 +1,8 @@
 import React from "react";
 import "./LeftPane.css";
 import { useState, useEffect } from "react";
-import { getVerifiedUsers } from "../apiController/api_operations";
 
-export default function LeftPane({ getUsers }) {
-  const [users, setUsers] = useState("");
-
-  const readUser = async () => {
-    const user = await getVerifiedUsers();
-    console.log(user);
-    setUsers(user);
-  };
-
-  useEffect(() => {
-    readUser();
-  }, []);
-
-  if (!users) {
-    return <div>Loading...</div>;
-  }
-
+export default function LeftPane({ users }) {
   return (
     <div className="users">
       <h3>Messages</h3>

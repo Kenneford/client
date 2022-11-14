@@ -8,7 +8,8 @@ import HelpIcon from "@mui/icons-material/Help";
 import "./Header.css";
 import UsersLinkButton from "../NavLinks/UsersLinkButton";
 
-export default function Header() {
+export default function Header({ users }) {
+  console.log(users);
   const navigate = useNavigate();
   const goToSettings = () => {
     navigate("/settings");
@@ -33,7 +34,7 @@ export default function Header() {
               onClick={goToSettings}
               titleAccess="Account Settings"
               sx={{
-                color: "#24f524",
+                color: "#fff",
                 transition: ".3s",
                 borderRadius: "5px",
                 padding: "5px",
@@ -44,7 +45,7 @@ export default function Header() {
               }}
             />
             {/* </Link> */}
-            <UsersLinkButton />
+            {/* <UsersLinkButton /> */}
           </div>
           <div className="headerIcons">
             <Search />

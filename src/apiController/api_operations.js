@@ -64,3 +64,36 @@ export const getVerifiedUsers = async (token) => {
   console.log(result);
   return result;
 };
+
+export const postMessage = async (message, users, sender) => {
+  const response = await fetch(LOCAL_API_ENDPOINT + "/api/signup", {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      message,
+      users,
+      sender,
+    }),
+  });
+  const result = await response.json();
+  console.log(result);
+  return result;
+};
+
+export const Messages = async () => {
+  const response = await fetch(LOCAL_API_ENDPOINT + "/api/all-messages", {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Accept: "application/json",
+    },
+  });
+  const result = await response.json();
+  console.log(result);
+  return result;
+};
