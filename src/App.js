@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUp from "./userSigning/SignUp";
 import SignIn from "./userSigning/SignIn";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/ChatInput";
 import NotPermitted from "./pages/NotPermitted";
 import {
   signUpUser,
@@ -12,6 +12,7 @@ import {
 } from "./apiController/api_operations";
 import UsersLinkButton from "./NavLinks/UsersLinkButton";
 import UsersPage from "./pages/UsersPage";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   const [data, setData] = useState({
@@ -78,7 +79,7 @@ function App() {
       />
       <Route
         path="/chat"
-        element={<MainPage token={data.token} getUsers={getUsers} />}
+        element={<ChatPage token={data.token} getUsers={getUsers} />}
       />
       <Route path="/all-users" element={<UsersPage />} />
       <Route path="/unauthorized" element={<NotPermitted />} />

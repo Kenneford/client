@@ -1,7 +1,14 @@
 .chatBody {
-  width: 70%;
+  width: 100%;
   margin: auto;
   background: #292929;
-  height: 95.5vh;
+  /* height: 95.5vh; */
   color: #fff;
+}
+.sideBars {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.chatCont {
+  width: 70%;
 }
