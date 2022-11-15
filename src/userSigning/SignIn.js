@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SignIn({ signin, token, getUsers }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [error, setError] = useState("");
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
 
   const toastOptions = {
@@ -33,6 +33,7 @@ export default function SignIn({ signin, token, getUsers }) {
     e.preventDefault();
     console.log(userName, password);
     signin(userName, password);
+    localStorage.setItem("user", userName);
     if (!password || !userName) {
       toast.error(
         "Authentication failed! Invalid username or password!😒",
@@ -41,6 +42,7 @@ export default function SignIn({ signin, token, getUsers }) {
       // setError("Password and username can't be empty!");
       return;
     } else {
+      setUser(userName);
       navigate("/");
     }
   };
@@ -69,7 +71,7 @@ export default function SignIn({ signin, token, getUsers }) {
   return (
     <div className="signInWrap">
       <div className="links">
-        <FamChatButton />
+        <FamChatButton user={user} />
         <SignUpButton />
       </div>
       <form

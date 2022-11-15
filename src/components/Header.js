@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Search from "../components/Search";
 import TextsmsIcon from "@mui/icons-material/Textsms";
@@ -7,27 +7,32 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import "./Header.css";
 import UsersLinkButton from "../NavLinks/UsersLinkButton";
+import FamChatButtonHeader from "../NavLinks/FamChatButtonHeader";
 
 export default function Header({ users }) {
+  const [user, setUser] = useState(localStorage.getItem("user"));
   console.log(users);
   const navigate = useNavigate();
   const goToSettings = () => {
     navigate("/settings");
   };
+
+  const logOutUser = () => {
+    localStorage.removeItem("user");
+    setUser("");
+    navigate("/login");
+  };
   return (
     <div>
       <div className="header">
         <div className="leftHead">
-          <p className="logo">
-            <span className="logo-fam">fam</span>
-            <span>Chat</span>
-          </p>
+          <FamChatButtonHeader />
         </div>
         <div className="rightHead">
           <div className="imageCont">
             <Link to="#" className="imageWrap">
               <img src="/watsup-pic.jpg" alt="" width="30" height="30" />
-              <p>@Kenneford</p>
+              <p>@{user}</p>
             </Link>
             {/* <Link to="/settings"> */}
             <ManageAccountsIcon
@@ -67,9 +72,9 @@ export default function Header({ users }) {
                 cursor: "pointer",
               }}
             />
-            <Link to="/login">
-              <button className="logout">Log Out</button>
-            </Link>
+            <button className="logout" onClick={logOutUser}>
+              Log Out
+            </button>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import RightPane from "../components/RightPane";
 import ChatInput from "./ChatInput";
 import Messages from "./SentMessages";
 
-export default function ChatPage() {
+export default function ChatPage({ messageSent, chatsList }) {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ export default function ChatPage() {
       <div className="sideBars">
         <LeftPane users={users} />
         <div className="chatCont">
-          <ChatInput messageSent={(message) => console.log(message.message)} />
+          <ChatInput messageSent={messageSent} chatsList={chatsList} />
         </div>
         <RightPane users={users} />
       </div>

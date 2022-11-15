@@ -21,10 +21,13 @@ export default function ChatContainer() {
 
   useEffect(() => {
     readUser();
+  }, []);
+
+  useEffect(() => {
     socketio.on("chat", (senderChats) => {
       setChats(senderChats);
     });
-  }, []);
+  });
 
   function sendChatToSocket(chat) {
     socketio.emit("chat", chat);
@@ -36,7 +39,7 @@ export default function ChatContainer() {
     sendChatToSocket([...chats, newChat]);
   }
 
-  function chatsList() {
+  function ChatsList() {
     return chats.map((chat, id) => {
       if (chat.user === user) {
         return <ReceivedMessages key={id} message={chat.message} />;
@@ -45,5 +48,13 @@ export default function ChatContainer() {
     });
   }
 
-  return <div>{user ? <ChatPage /> : <SignIn setUser={setUser} />}</div>;
+  return (
+    <div>
+      {user ? (
+        <ChatPage ChatsList={ChatsList} messageSent={messageSent} />
+      ) : (
+        <SignIn setUser={setUser} />
+      )}
+    </div>
+  );
 }

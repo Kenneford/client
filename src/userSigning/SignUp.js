@@ -3,7 +3,6 @@ import "./SignUp.css";
 import LockIcon from "@mui/icons-material/Lock";
 import FamChatButton from "../NavLinks/FamChatButton";
 import SignInButton from "../NavLinks/SignInButton";
-import "../NavLinks/FamChatButton.css";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
