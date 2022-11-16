@@ -3,17 +3,13 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignUp from "./userSigning/SignUp";
 import SignIn from "./userSigning/SignIn";
-import MainPage from "./pages/ChatInput";
 import NotPermitted from "./pages/NotPermitted";
 import {
   signUpUser,
   validateUser,
   getVerifiedUsers,
 } from "./apiController/api_operations";
-import UsersLinkButton from "./NavLinks/UsersLinkButton";
 import UsersPage from "./pages/UsersPage";
-import ChatPage from "./pages/ChatPage";
-import SentMessages, { ReceivedMessages } from "./pages/SentMessages";
 import ChatContainer from "./pages/ChatContainer";
 
 function App() {

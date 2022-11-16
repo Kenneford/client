@@ -5,6 +5,7 @@ import FamChatButton from "../NavLinks/FamChatButton";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { getVerifiedUsers } from "../apiController/api_operations";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function SignIn({ signin, token, getUsers }) {
@@ -32,15 +33,32 @@ export default function SignIn({ signin, token, getUsers }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(userName, password);
+    // const userNameCheck = localStorage.getItem("username");
+    // const passwordCheck = localStorage.getItem("password");
     signin(userName, password);
-    localStorage.setItem("user", userName);
-    if (!password || !userName) {
+    localStorage.setItem("username", userName);
+
+    if (!password && !userName) {
       toast.error(
-        "Authentication failed! Invalid username or password!😒",
+        "Authentication failed! Provide a username and a password!😒",
         toastOptions
       );
       // setError("Password and username can't be empty!");
       return;
+      // } else if (password !== passwordCheck) {
+      //   toast.error(
+      //     "Authentication failed! Invalid password provided!😒",
+      //     toastOptions
+      //   );
+      //   // setError("Password and username can't be empty!");
+      //   return;
+      // } else if (userName !== userNameCheck) {
+      //   toast.error(
+      //     "Authentication failed! Invalid username provided!😒",
+      //     toastOptions
+      //   );
+      //   // setError("Password and username can't be empty!");
+      //   return;
     } else {
       setUser(userName);
       navigate("/");
@@ -63,7 +81,7 @@ export default function SignIn({ signin, token, getUsers }) {
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
-    if (e.keyCode === "Enter") {
+    if (e.keyCode === "13") {
       handleLogin();
     }
   };

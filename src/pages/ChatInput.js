@@ -12,6 +12,8 @@ import Settings from "./Settings";
 import { Link, Navigate } from "react-router-dom";
 import SentMessages from "./SentMessages";
 import ReceivedMessages from "./ReceivedMessages";
+import socketClient from "socket.io-client";
+import { getVerifiedUsers } from "../apiController/api_operations";
 import moment from "moment";
 
 const PORT = "/chat";
@@ -19,8 +21,7 @@ const PORT = "/chat";
 export default function ChatInput({ messageSent }) {
   const [sentMessages, setSentMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
-  const [reveivedMessages, setReceivedMessages] =
-    useState("I'm in here too!🤣");
+  const [reveivedMessages, setReceivedMessages] = useState([]);
   // const [user, setUser] = useState("");
   const date = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
   // const date = moment().format("Do YY");
@@ -39,13 +40,46 @@ export default function ChatInput({ messageSent }) {
       setMessageInput("");
     }
   };
-  const sendMessage1 = (e) => {
-    e.preventDefault();
-    messageSent({
-      sentMessages,
-    });
-    setMessageInput("");
+
+  let socketio = socketClient("ws://localhost:8083");
+
+  const [chats, setChats] = useState([]);
+  const [user, setUser] = useState();
+
+  const readUser = async () => {
+    const user = await getVerifiedUsers();
+    console.log(user);
+    setUser(user);
   };
+
+  useEffect(() => {
+    readUser();
+  }, []);
+
+  useEffect(() => {
+    socketio.on("chat", (senderChats) => {
+      setChats(senderChats);
+    });
+  });
+
+  function sendChatToSocket(chat) {
+    socketio.emit("chat", chat);
+  }
+
+  function messageSent(chat) {
+    const newChat = { ...chat, user };
+    setChats([...chats, newChat]);
+    sendChatToSocket([...chats, newChat]);
+  }
+
+  function ChatsList() {
+    return chats.map((chat, id) => {
+      if (chat.user === user) {
+        return <ReceivedMessages key={id} message={chat.message} />;
+      }
+      return <SentMessages key={id} message={chat.message} />;
+    });
+  }
 
   const handleKeyPress = (e) => {
     if (e.keyCode === "Enter") {
@@ -57,7 +91,8 @@ export default function ChatInput({ messageSent }) {
   return (
     <div className="mainBody">
       <div className="msgCont">
-        <SentMessages
+        <ChatsList />
+        {/* <SentMessages
           sentMessages={sentMessages}
           // reveivedMessages={reveivedMessages}
           date={date}
@@ -67,7 +102,7 @@ export default function ChatInput({ messageSent }) {
           reveivedMessages={reveivedMessages}
           date={date}
           time={time}
-        />
+        /> */}
       </div>
       <form
         className="chatInput"

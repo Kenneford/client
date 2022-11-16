@@ -72,7 +72,9 @@ export default function SignUp({ signup, user, getUsers }) {
       toast.error("Please check and enter email address!", toastOptions);
       return false;
     } else {
-      navigate("/chat");
+      // localStorage.setItem("username", userName);
+      // localStorage.setItem("password", password);
+      navigate("/login");
     }
   };
 
