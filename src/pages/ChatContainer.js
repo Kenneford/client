@@ -7,10 +7,10 @@ import ChatPage from "./ChatPage";
 import ReceivedMessages from "./ReceivedMessages";
 import SentMessages from "./SentMessages";
 
-export default function ChatContainer() {
-  let socketio = socketClient("http://localhost:8083");
+export default function ChatContainer({ userName }) {
+  //   let socketio = socketClient("ws://localhost:8083");
 
-  const [chats, setChats] = useState([]);
+  //   const [chats, setChats] = useState([]);
   const [user, setUser] = useState();
 
   const readUser = async () => {
@@ -23,37 +23,39 @@ export default function ChatContainer() {
     readUser();
   }, []);
 
-  useEffect(() => {
-    socketio.on("chat", (senderChats) => {
-      setChats(senderChats);
-    });
-  });
+  //   useEffect(() => {
+  //     socketio.on("chat", (senderChats) => {
+  //       setChats(senderChats);
+  //     });
+  //   });
 
-  function sendChatToSocket(chat) {
-    socketio.emit("chat", chat);
-  }
+  //   function sendChatToSocket(chat) {
+  //     socketio.emit("chat", chat);
+  //   }
 
-  function messageSent(chat) {
-    const newChat = { ...chat, user };
-    setChats([...chats, newChat]);
-    sendChatToSocket([...chats, newChat]);
-  }
+  //   function messageSent(chat) {
+  //     const newChat = { ...chat, user };
+  //     setChats([...chats, newChat]);
+  //     sendChatToSocket([...chats, newChat]);
+  //   }
 
-  function ChatsList() {
-    return chats.map((chat, id) => {
-      if (chat.user === user) {
-        return <ReceivedMessages key={id} message={chat.message} />;
-      }
-      return <SentMessages key={id} message={chat.message} />;
-    });
-  }
+  //   function ChatsList() {
+  //     return chats.map((chat, id) => {
+  //       if (chat.user === user) {
+  //         return <ReceivedMessages key={id} message={chat.message} />;
+  //       }
+  //       return <SentMessages key={id} message={chat.message} />;
+  //     });
+  //   }
 
   return (
     <div>
-      {user ? (
-        <ChatPage ChatsList={ChatsList} messageSent={messageSent} />
-      ) : (
-        <SignIn setUser={setUser} />
+      {user && (
+        <ChatPage
+          //   ChatsList={ChatsList}
+          //   messageSent={messageSent}
+          userName={userName}
+        />
       )}
     </div>
   );

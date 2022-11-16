@@ -1,10 +1,10 @@
 import React from "react";
 import "./Messages.css";
 
-export default function SentMessages({ sentMessages, user, date }) {
+export default function SentMessages({ sentMessages, user, date, message }) {
   return (
     <div className="sentMsg">
-      {sentMessages.map((sentMsg, id) => {
+      {message.map((sentMsg, id) => {
         return (
           <p key={id}>
             {sentMsg}

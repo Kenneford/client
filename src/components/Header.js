@@ -9,16 +9,17 @@ import "./Header.css";
 import UsersLinkButton from "../NavLinks/UsersLinkButton";
 import FamChatButtonHeader from "../NavLinks/FamChatButtonHeader";
 
-export default function Header({ users }) {
-  const [user, setUser] = useState(localStorage.getItem("user"));
-  console.log(users);
+export default function Header({ users, userName }) {
+  const [user, setUser] = useState(localStorage.getItem("username"));
+  console.log(user);
   const navigate = useNavigate();
   const goToSettings = () => {
     navigate("/settings");
   };
 
   const logOutUser = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
     setUser("");
     navigate("/login");
   };
