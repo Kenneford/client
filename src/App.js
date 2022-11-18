@@ -11,13 +11,16 @@ import {
 } from "./apiController/api_operations";
 import UsersPage from "./pages/UsersPage";
 import ChatContainer from "./pages/ChatContainer";
+import { useCookies } from "react-cookie";
 
 function App() {
   const [data, setData] = useState({
     users: [],
     token: null,
+    refreshToken: null,
     userName: null,
   });
+  const [cookies, setCookie] = useCookies(["user"]);
 
   //User Sign Up Function
   const signup = async (
@@ -26,7 +29,8 @@ function App() {
     userName,
     email,
     password,
-    confirmPassword
+    confirmPassword,
+    profileImage
   ) => {
     const token = await signUpUser(
       firstName,
@@ -34,14 +38,17 @@ function App() {
       userName,
       email,
       password,
-      confirmPassword
+      confirmPassword,
+      profileImage
     );
     setData((prev) => ({ ...prev, token: token }));
+    setCookie("Profile-image", profileImage, { path: "/" });
   };
 
-  const signin = async (userName, password) => {
+  const signin = async (userName, password, profileImage) => {
     const token = await validateUser(userName, password);
     setData((prev) => ({ ...prev, token: token }));
+    setCookie("Name", userName, { path: "/" });
   };
 
   const getUsers = async (token) => {
@@ -79,10 +86,8 @@ function App() {
       />
       <Route
         path="/"
-        element={<ChatContainer token={data.token} getUsers={getUsers} />}
+        element={<ChatContainer token={data.token} cookies={cookies} />}
       />
-      <Route path="/all-users" element={<UsersPage />} />
-      <Route path="/unauthorized" element={<NotPermitted />} />
     </Routes>
   );
 }

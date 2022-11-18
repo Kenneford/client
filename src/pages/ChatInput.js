@@ -10,97 +10,47 @@ import Settings from "./Settings";
 // import { IoMdSend } from "react-icons/io";
 // import { BsEmojiSmileFill } from "react-icons/bs";
 import { Link, Navigate } from "react-router-dom";
-import SentMessages from "./SentMessages";
-import ReceivedMessages from "./ReceivedMessages";
+import SentMessages from "./Messages";
+import ReceivedMessages from "./Message";
 import socketClient from "socket.io-client";
 import { getVerifiedUsers } from "../apiController/api_operations";
 import moment from "moment";
 
 const PORT = "/chat";
 
-export default function ChatInput({ messageSent }) {
-  const [sentMessages, setSentMessages] = useState([]);
-  const [messageInput, setMessageInput] = useState("");
-  const [reveivedMessages, setReceivedMessages] = useState([]);
+export default function ChatInput({ message, setMessage, sendMessage }) {
+  // const [sentMessages, setSentMessages] = useState([]);
+  // const [messageInput, setMessageInput] = useState("");
+  // const [reveivedMessages, setReceivedMessages] = useState(
+  //   "Hi, I'm also here...🤣"
+  // );
   // const [user, setUser] = useState("");
-  const date = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
+  // const dateSent = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
+  const dateSent = moment().format("Do MMM, YY - h:mm:ss a");
+  const dateReceived = moment().format("Do MMM, YY - h:mm:ss a");
   // const date = moment().format("Do YY");
   const time = moment().format("h:mm:ss a");
-
-  const addMessage = (sentMessages) => {
-    setSentMessages((prev) => [...prev, sentMessages]);
-  };
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (messageInput === "") {
-      alert("Please add a message!");
-      return;
-    } else {
-      setSentMessages((prev) => [...prev, messageInput]);
-      setMessageInput("");
-    }
-  };
-
-  let socketio = socketClient("ws://localhost:8083");
-
-  const [chats, setChats] = useState([]);
-  const [user, setUser] = useState();
-
-  const readUser = async () => {
-    const user = await getVerifiedUsers();
-    console.log(user);
-    setUser(user);
-  };
-
-  useEffect(() => {
-    readUser();
-  }, []);
-
-  useEffect(() => {
-    socketio.on("chat", (senderChats) => {
-      setChats(senderChats);
-    });
-  });
-
-  function sendChatToSocket(chat) {
-    socketio.emit("chat", chat);
-  }
-
-  function messageSent(chat) {
-    const newChat = { ...chat, user };
-    setChats([...chats, newChat]);
-    sendChatToSocket([...chats, newChat]);
-  }
-
-  function ChatsList() {
-    return chats.map((chat, id) => {
-      if (chat.user === user) {
-        return <ReceivedMessages key={id} message={chat.message} />;
-      }
-      return <SentMessages key={id} message={chat.message} />;
-    });
-  }
 
   const handleKeyPress = (e) => {
     if (e.keyCode === "Enter") {
       sendMessage();
-      setMessageInput("");
+      setMessage("");
     }
   };
 
   return (
     <div className="mainBody">
       <div className="msgCont">
-        <ChatsList />
+        {/* <ChatsList /> */}
         {/* <SentMessages
           sentMessages={sentMessages}
           // reveivedMessages={reveivedMessages}
-          date={date}
+          dateSent={dateSent}
           time={time}
         />
         <ReceivedMessages
           reveivedMessages={reveivedMessages}
-          date={date}
+          dateReceived={dateReceived}
           time={time}
         /> */}
       </div>
@@ -112,8 +62,9 @@ export default function ChatInput({ messageSent }) {
         <input
           type="text"
           placeholder="Enter your message here..."
-          value={messageInput}
-          onChange={(e) => setMessageInput(e.target.value)}
+          autoComplete="off"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <button type="submit">Send ➤</button>
       </form>

@@ -11,6 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SignIn({ signin, token, getUsers }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    localStorage.getItem("profileImg")
+  );
   const [user, setUser] = useState("");
   const navigate = useNavigate();
 
@@ -36,7 +39,6 @@ export default function SignIn({ signin, token, getUsers }) {
     // const userNameCheck = localStorage.getItem("username");
     // const passwordCheck = localStorage.getItem("password");
     signin(userName, password);
-    localStorage.setItem("username", userName);
 
     if (!password && !userName) {
       toast.error(
@@ -60,9 +62,13 @@ export default function SignIn({ signin, token, getUsers }) {
       //   // setError("Password and username can't be empty!");
       //   return;
     } else {
+      localStorage.setItem("username", userName);
+      const userProfile = localStorage.setItem("profileImg", profileImage);
       setUser(userName);
-      navigate("/");
+      setProfileImage(userProfile);
+      // navigate(`/?name=${userName}`);
     }
+    navigate(`/?name=${userName}`);
   };
 
   const handleValidation = () => {

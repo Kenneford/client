@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useCookies } from "react-cookie";
 
 export default function SignUp({ signup, user, getUsers }) {
   const [firstName, setFirstName] = useState("");
@@ -15,8 +16,10 @@ export default function SignUp({ signup, user, getUsers }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["user"]);
 
   const toastOptions = {
     position: "bottom-right",
@@ -42,8 +45,20 @@ export default function SignUp({ signup, user, getUsers }) {
       email,
       password,
       confirmPassword,
+      profileImage,
     });
-    signup(firstName, lastName, userName, email, password, confirmPassword);
+    signup(
+      firstName,
+      lastName,
+      userName,
+      email,
+      password,
+      confirmPassword,
+      profileImage
+    );
+    localStorage.setItem("profileImg", profileImage);
+    // setCookie("profileImage", profileImage, { path: "/" });
+
     if (!firstName || !lastName) {
       const error = "First name or last name should not be empty!";
       console.log({ Error: error });
@@ -188,9 +203,20 @@ export default function SignUp({ signup, user, getUsers }) {
             />
           </div>
         </div>
-        <button type="submit" className="signUpBtn">
-          Create New Account
-        </button>
+        <div className="profileImg-Btn">
+          <div className="profile">
+            <h3>Profile Image:</h3>
+            <input
+              type="text"
+              value={profileImage}
+              name="profileImage"
+              onChange={(e) => setProfileImage(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="signUpBtn">
+            Create New Account
+          </button>
+        </div>
         <Footer />
         <ToastContainer />
       </form>

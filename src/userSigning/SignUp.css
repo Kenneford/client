@@ -23,7 +23,8 @@
 }
 .name,
 .userName-email,
-.password {
+.password,
+.profileImg-Btn {
   display: flex;
 }
 
@@ -58,17 +59,27 @@
   border: 1px solid #fff;
 }
 
+.profileImg-Btn {
+  display: ;
+}
+
 .signUpBtn {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #fff;
   font-size: 1.2em;
   margin-top: 20px;
-  background: transparent;
+  /* background: #2f9f2f; */
+  background: linear-gradient(to bottom, #03d903 0%, #015101 100%);
   color: #fff;
-  transition: 0.3s;
+  transition: 0.5s ease-in-out;
   cursor: pointer;
+  width: 350px;
+  font-weight: 700;
 }
 .signUpBtn:hover {
-  background: #2f9f2f;
+  /* background: #fff;
+  color: #2f9f2f; */
+  background: linear-gradient(to bottom, #027b02 0%, #03d903 100%);
+  /* font-weight: 700; */
 }
