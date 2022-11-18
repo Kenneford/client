@@ -72,8 +72,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  font-size: 0.8em;
   /* background: #696969;
   padding: 2px 5px;
-  font-size: 0.8em;
   border-radius: 5px; */
 }

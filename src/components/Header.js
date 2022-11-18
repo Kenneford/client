@@ -13,16 +13,19 @@ export default function Header({ users, userName }) {
   const [user, setUser] = useState(localStorage.getItem("username"));
   console.log(user);
   const navigate = useNavigate();
+
   const goToSettings = () => {
     navigate("/settings");
   };
 
   const logOutUser = () => {
     localStorage.removeItem("username");
-    localStorage.removeItem("password");
+    // localStorage.removeItem("password");
     setUser("");
     navigate("/login");
   };
+
+  const profile = localStorage.getItem("profileImg");
   return (
     <div>
       <div className="header">
@@ -32,7 +35,7 @@ export default function Header({ users, userName }) {
         <div className="rightHead">
           <div className="imageCont">
             <Link to="#" className="imageWrap">
-              <img src="/watsup-pic.jpg" alt="" width="30" height="30" />
+              <img src={profile} alt="" width="30" height="30" />
               <p>@{user}</p>
             </Link>
             {/* <Link to="/settings"> */}

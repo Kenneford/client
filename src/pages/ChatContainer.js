@@ -4,8 +4,9 @@ import socketClient from "socket.io-client";
 import { getVerifiedUsers } from "../apiController/api_operations";
 import SignIn from "../userSigning/SignIn";
 import ChatPage from "./ChatPage";
-import ReceivedMessages from "./ReceivedMessages";
-import SentMessages from "./SentMessages";
+import ReceivedMessages from "./Message";
+import SentMessages from "./Messages";
+import queryString from "query-string";
 
 export default function ChatContainer({ userName }) {
   //   let socketio = socketClient("ws://localhost:8083");
