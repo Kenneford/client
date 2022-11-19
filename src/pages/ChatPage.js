@@ -12,11 +12,12 @@ import clientSocket from "socket.io-client";
 
 let socketio;
 
-export default function ChatPage({ messageSent, chatsList, userName }) {
+export default function ChatPage({ messageSent, chatsList, userName, token }) {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -55,7 +56,7 @@ export default function ChatPage({ messageSent, chatsList, userName }) {
     socketio.emit("sendMessage", message);
     setMessage("");
   };
-  console.log(message, messages);
+  // console.log(message, messages);
 
   const readUser = async () => {
     const user = await getVerifiedUsers();
@@ -82,11 +83,15 @@ export default function ChatPage({ messageSent, chatsList, userName }) {
   //   }
   // };
 
+  const connectedUser = () => {
+    setIsConnected(true);
+  };
+
   return (
     <div className="chatBody">
-      <Header userName={userName} />
+      <Header userName={userName} token={token} connectedUser={connectedUser} />
       <div className="sideBars">
-        <LeftPane users={users} />
+        <LeftPane users={users} token={token} connectedUser={connectedUser} />
         <div className="chatCont">
           {/* <Messages messages={messages} name={name} /> */}
           <ChatInput

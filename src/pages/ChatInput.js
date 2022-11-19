@@ -1,58 +1,54 @@
 import React, { useState, useEffect } from "react";
 import "./ChatInput.css";
-import Header from "../components/Header";
-import LeftPane from "../components/LeftPane";
-import RightPane from "../components/RightPane";
-import { Routes, Route } from "react-router-dom";
-import ChatPage from "./ChatPage";
-import Settings from "./Settings";
-// import Picker from "emoji-picker-react";
-// import { IoMdSend } from "react-icons/io";
-// import { BsEmojiSmileFill } from "react-icons/bs";
-import { Link, Navigate } from "react-router-dom";
-import SentMessages from "./Messages";
-import ReceivedMessages from "./Message";
-import socketClient from "socket.io-client";
-import { getVerifiedUsers } from "../apiController/api_operations";
 import moment from "moment";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
+import cSocket from "../controllers/clientSocket";
 
-const PORT = "/chat";
+export default function ChatInput() {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [userName, setUserName] = useState("");
+  const location = useLocation();
 
-export default function ChatInput({ message, setMessage, sendMessage }) {
-  // const [sentMessages, setSentMessages] = useState([]);
-  // const [messageInput, setMessageInput] = useState("");
-  // const [reveivedMessages, setReceivedMessages] = useState(
-  //   "Hi, I'm also here...🤣"
-  // );
-  // const [user, setUser] = useState("");
-  // const dateSent = `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
-  const dateSent = moment().format("Do MMM, YY - h:mm:ss a");
-  const dateReceived = moment().format("Do MMM, YY - h:mm:ss a");
-  // const date = moment().format("Do YY");
-  const time = moment().format("h:mm:ss a");
+  useEffect(() => {
+    const { name } = queryString.parse(location.search);
+    setUserName(name);
+    //NEW USER JOINED ALERT
+    cSocket.on("joined user", (msg) => {
+      console.log("user joined message: ", msg);
+      // socketio.emit("join", { name }, () => {});
+    });
 
+    //NEW MESSAGE FROM ANOTHER USER
+    cSocket.on("message", (message) => {
+      console.log("message:", message);
+      setMessages((prevMsg) => [...prevMsg, message]);
+    });
+
+    return () => {
+      cSocket.off("user joined");
+      cSocket.off("message");
+    };
+  }, []);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    cSocket.emit("message", `${userName} - ${message}`);
+    setMessage("");
+  };
   const handleKeyPress = (e) => {
     if (e.keyCode === "Enter") {
       sendMessage();
-      setMessage("");
     }
   };
 
   return (
     <div className="mainBody">
       <div className="msgCont">
-        {/* <ChatsList /> */}
-        {/* <SentMessages
-          sentMessages={sentMessages}
-          // reveivedMessages={reveivedMessages}
-          dateSent={dateSent}
-          time={time}
-        />
-        <ReceivedMessages
-          reveivedMessages={reveivedMessages}
-          dateReceived={dateReceived}
-          time={time}
-        /> */}
+        {messages.map((msg, id) => (
+          <div key={id}>{msg}</div>
+        ))}
       </div>
       <form
         className="chatInput"

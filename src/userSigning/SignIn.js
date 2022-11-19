@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { getVerifiedUsers } from "../apiController/api_operations";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function SignIn({ signin, token, getUsers }) {
+export default function SignIn({ signin, connectedUser }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [profileImage, setProfileImage] = useState(
@@ -23,13 +23,6 @@ export default function SignIn({ signin, token, getUsers }) {
     pauseOnHover: true,
     draggable: true,
     theme: "light",
-  };
-
-  const userCheck = () => {
-    const oldUser = getUsers().map((user) => {
-      return user.password;
-    });
-    return oldUser;
   };
 
   //Still need to work on user login
@@ -66,24 +59,24 @@ export default function SignIn({ signin, token, getUsers }) {
       const userProfile = localStorage.setItem("profileImg", profileImage);
       setUser(userName);
       setProfileImage(userProfile);
-      // navigate(`/?name=${userName}`);
+      connectedUser();
+      navigate(`/?name=${userName}`);
     }
-    navigate(`/?name=${userName}`);
   };
 
-  const handleValidation = () => {
-    const userSignIn = signin(userName, password);
-    if (password === "") {
-      toast.error("Username and password required!", toastOptions);
-      return false;
-    } else if (password !== userSignIn.password) {
-      toast.error("Invalid password provided!", toastOptions);
-      return false;
-    } else if (userName !== userSignIn.userName) {
-      toast.error("Invalid username provided!", toastOptions);
-      return false;
-    }
-  };
+  // const handleValidation = () => {
+  //   const userSignIn = signin(userName, password);
+  //   if (password === "") {
+  //     toast.error("Username and password required!", toastOptions);
+  //     return false;
+  //   } else if (password !== userSignIn.password) {
+  //     toast.error("Invalid password provided!", toastOptions);
+  //     return false;
+  //   } else if (userName !== userSignIn.userName) {
+  //     toast.error("Invalid username provided!", toastOptions);
+  //     return false;
+  //   }
+  // };
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
