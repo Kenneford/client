@@ -31,3 +31,15 @@
 .chatFriend p:hover {
   text-decoration: underline;
 }
+.online-signal {
+  color: #08d708;
+  font-size: 0.5em;
+  margin-left: 10px;
+  align-items: center;
+}
+.offline-signal {
+  color: red;
+  font-size: 0.5em;
+  margin-left: 10px;
+  align-items: center;
+}

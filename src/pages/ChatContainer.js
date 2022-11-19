@@ -7,12 +7,14 @@ import ChatPage from "./ChatPage";
 import ReceivedMessages from "./Message";
 import SentMessages from "./Messages";
 import queryString from "query-string";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function ChatContainer({ userName }) {
-  //   let socketio = socketClient("ws://localhost:8083");
-
-  //   const [chats, setChats] = useState([]);
+export default function ChatContainer({ token, signin }) {
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
   const [user, setUser] = useState();
+  const [isConnected, setIsConnected] = useState(false);
 
   const readUser = async () => {
     const user = await getVerifiedUsers();
@@ -24,39 +26,17 @@ export default function ChatContainer({ userName }) {
     readUser();
   }, []);
 
-  //   useEffect(() => {
-  //     socketio.on("chat", (senderChats) => {
-  //       setChats(senderChats);
-  //     });
-  //   });
-
-  //   function sendChatToSocket(chat) {
-  //     socketio.emit("chat", chat);
-  //   }
-
-  //   function messageSent(chat) {
-  //     const newChat = { ...chat, user };
-  //     setChats([...chats, newChat]);
-  //     sendChatToSocket([...chats, newChat]);
-  //   }
-
-  //   function ChatsList() {
-  //     return chats.map((chat, id) => {
-  //       if (chat.user === user) {
-  //         return <ReceivedMessages key={id} message={chat.message} />;
-  //       }
-  //       return <SentMessages key={id} message={chat.message} />;
-  //     });
-  //   }
+  const connectedUser = () => {
+    setIsConnected(true);
+  };
 
   return (
     <div>
-      {user && (
-        <ChatPage
-          //   ChatsList={ChatsList}
-          //   messageSent={messageSent}
-          userName={userName}
-        />
+      {/* <ChatPage userName={userName} token={token} /> */}
+      {isConnected ? (
+        <ChatPage userName={userName} token={token} />
+      ) : (
+        <SignIn signin={signin} connectedUser={connectedUser} />
       )}
     </div>
   );

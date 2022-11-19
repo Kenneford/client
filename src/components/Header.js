@@ -9,7 +9,7 @@ import "./Header.css";
 import UsersLinkButton from "../NavLinks/UsersLinkButton";
 import FamChatButtonHeader from "../NavLinks/FamChatButtonHeader";
 
-export default function Header({ users, userName }) {
+export default function Header({ users, userName, token }) {
   const [user, setUser] = useState(localStorage.getItem("username"));
   console.log(user);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Header({ users, userName }) {
     localStorage.removeItem("username");
     // localStorage.removeItem("password");
     setUser("");
-    navigate("/login");
+    navigate("/");
   };
 
   const profile = localStorage.getItem("profileImg");
@@ -37,6 +37,9 @@ export default function Header({ users, userName }) {
             <Link to="#" className="imageWrap">
               <img src={profile} alt="" width="30" height="30" />
               <p>@{user}</p>
+              {user && (
+                <i className="fa-solid fa-earth-americas header-online-signal"></i>
+              )}
             </Link>
             {/* <Link to="/settings"> */}
             <ManageAccountsIcon

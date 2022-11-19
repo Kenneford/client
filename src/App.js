@@ -78,15 +78,17 @@ function App() {
           <SignUp signup={signup} token={data.token} getUsers={getUsers} />
         }
       />
-      <Route
+      {/* <Route
         path="/login"
         element={
           <SignIn signin={signin} getUsers={getUsers} token={data.token} />
         }
-      />
+      /> */}
       <Route
         path="/"
-        element={<ChatContainer token={data.token} cookies={cookies} />}
+        element={
+          <ChatContainer token={data.token} cookies={cookies} signin={signin} />
+        }
       />
     </Routes>
   );
