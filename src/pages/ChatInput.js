@@ -11,6 +11,8 @@ export default function ChatInput() {
   const [userName, setUserName] = useState("");
   const location = useLocation();
 
+  const date = moment().format("MMM Do YY, h:mm a");
+
   useEffect(() => {
     const { name } = queryString.parse(location.search);
     setUserName(name);
@@ -47,7 +49,10 @@ export default function ChatInput() {
     <div className="mainBody">
       <div className="msgCont">
         {messages.map((msg, id) => (
-          <div key={id}>{msg}</div>
+          <div key={id}>
+            {msg} {""}
+            <em>{date}</em>
+          </div>
         ))}
       </div>
       <form
